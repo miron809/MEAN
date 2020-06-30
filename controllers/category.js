@@ -1,7 +1,5 @@
 module.exports.getAll = (req, res) => {
-  res.status(200).json({
-    login: true
-  })
+  res.json({message: 'Categories'})
 };
 
 module.exports.getById = (req, res) => {

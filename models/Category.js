@@ -16,4 +16,4 @@ const categorySchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('categoreis', categorySchema);
+module.exports = mongoose.model('categories', categorySchema);
