@@ -10,6 +10,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  register(user: User): Observable<User> {
+    return this.http.post<User>('/api/auth/register', user)
+  }
+
   login(user: User): Observable<any> {
     return this.http.post('/api/auth/login', user)
       .pipe(
