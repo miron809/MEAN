@@ -48,7 +48,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
         () => {
           this.router.navigate(['/login'], {
             queryParams: {
-              'registered': true
+              registered: true
             }
           })
         },
