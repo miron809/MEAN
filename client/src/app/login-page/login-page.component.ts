@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';
+import { MaterialService } from '../shared/classes/material.service';
 
 @Component({
   selector: 'app-login-page',
@@ -27,9 +28,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   getQueryParams() {
     this.route.queryParams.subscribe((params: Params) => {
       if (params['registered']) {
-
+        MaterialService.toast('Now you can sign-in')
       } else if (params['accessDenied']) {
-
+        MaterialService.toast('You should sign-up')
       }
     })
   }
@@ -49,7 +50,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
           this.router.navigate(['/overview'])
         },
         error => {
-          console.log(error)
+          MaterialService.toast(error.error.message);
         }
       )
   }

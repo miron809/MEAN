@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '../shared/services/auth.service';
+import { MaterialService } from '../shared/classes/material.service';
 
 @Component({
   selector: 'app-register-page',
@@ -20,18 +21,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getQueryParams();
     this.buildForm();
-  }
-
-  getQueryParams() {
-    this.route.queryParams.subscribe((params: Params) => {
-      if (params['registered']) {
-
-      } else if (params['accessDenied']) {
-
-      }
-    })
   }
 
   buildForm() {
@@ -53,7 +43,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
           })
         },
         error => {
-          console.log(error)
+          MaterialService.toast(error.error.message);
         }
       )
   }
