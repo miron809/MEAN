@@ -17,7 +17,7 @@ export class SiteLayoutComponent implements OnInit, AfterViewInit {
     {url: '/analytics', name: 'Analytics'},
     {url: '/history', name: 'History'},
     {url: '/order', name: 'Add new order'},
-    {url: '/categories', name: 'Assortment'},
+    {url: '/categories', name: 'Categories'},
   ];
 
   constructor( private router: Router,
