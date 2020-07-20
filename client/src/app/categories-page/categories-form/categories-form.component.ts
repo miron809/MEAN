@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoriesService } from '../../shared/services/categories.service';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MaterialService } from '../../shared/classes/material.service';
-import { Category } from '../../shared/interfaces';
+import { Category, Message } from '../../shared/interfaces';
 
 @Component({
   selector: 'app-categories-form',
@@ -21,6 +21,7 @@ export class CategoriesFormComponent implements OnInit {
   category: Category;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private categoriesService: CategoriesService) {
   }
 
@@ -61,7 +62,7 @@ export class CategoriesFormComponent implements OnInit {
           this.form.enable()
         },
         error => MaterialService.toast(error.error.message)
-        )
+      )
 
   }
 
@@ -89,13 +90,32 @@ export class CategoriesFormComponent implements OnInit {
     obs$.subscribe(
       (category: Category) => {
         this.category = category;
-        MaterialService.toast('Changes has been saved');
+        MaterialService.toast(this.isNew ? 'Category has been created' : 'Category has been saved');
         this.form.enable();
+        this.goToCategoryList();
       },
       error => {
         MaterialService.toast(error.error.message);
         this.form.enable();
+        this.goToCategoryList();
       }
     )
   }
+
+  deleteCategory() {
+    const decision = window.confirm(`Do you want delete category with name "${this.category.name}" ?`);
+
+    if (decision) {
+      this.categoriesService.delete(this.category._id)
+        .subscribe(
+          (message: Message) => MaterialService.toast(message.message),
+          error => MaterialService.toast(error.error.message),
+          () => this.goToCategoryList());
+    }
+  }
+
+  goToCategoryList() {
+    this.router.navigate(['/categories'])
+  }
+
 }
