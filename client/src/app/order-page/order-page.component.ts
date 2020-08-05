@@ -71,6 +71,7 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
         error => MaterialService.toast(error.error.message));
   }
 
+
   removePosition(item: OrderPosition) {
     this.order.remove(item);
   }
