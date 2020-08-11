@@ -22,7 +22,7 @@ export class OrderPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private router: Router,
               private ordersService: OrdersService,
-              private order: OrderService) {
+              public order: OrderService) {
   }
 
   ngOnInit(): void {
