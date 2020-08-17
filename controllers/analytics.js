@@ -40,10 +40,34 @@ module.exports.overview = async (req, res) => {
   }
 };
 
-module.exports.analytics = (req, res) => {
-  res.status(200).json({
-    register: true
-  })
+module.exports.analytics = async (req, res) => {
+  try {
+    const allOrders = await Order.find({user: req.user.id}).sort({date: 1})
+    const ordersMap = getOrdersMap(allOrders)
+
+    const average = +(calculatePrice(allOrders) / Object.keys(ordersMap).length).toFixed(2)
+
+    const chart = Object.keys(ordersMap).map(label => {
+    //  label == 05.05.2020
+      const gain = calculatePrice(ordersMap[label])
+      const order = ordersMap[label].length
+
+      return {
+        label,
+        gain,
+        order
+      }
+
+    })
+
+    res.status(200).json({
+      average,
+      chart
+    })
+
+  } catch (e) {
+    errorHandler(res, e)
+  }
 };
 
 
