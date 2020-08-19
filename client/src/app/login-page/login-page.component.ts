@@ -39,8 +39,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.form = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(6)])
+      email: new FormControl('admin@email.com', [Validators.required, Validators.email]),
+      password: new FormControl('123456', [Validators.required, Validators.minLength(6)])
     })
   }
 
