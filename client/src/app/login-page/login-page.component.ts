@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -11,7 +11,7 @@ import { MaterialService } from '../shared/classes/material.service';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit, OnDestroy {
+export class LoginPageComponent implements OnInit, AfterViewInit, OnDestroy {
   unsubscriber = new Subject();
 
   form: FormGroup;
@@ -23,6 +23,10 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getQueryParams();
     this.buildForm();
+  }
+
+  ngAfterViewInit(): void {
+    MaterialService.updateTextInputs();
   }
 
   getQueryParams() {
@@ -41,7 +45,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       email: new FormControl('admin@email.com', [Validators.required, Validators.email]),
       password: new FormControl('123456', [Validators.required, Validators.minLength(6)])
-    })
+    });
   }
 
   onSubmit() {
