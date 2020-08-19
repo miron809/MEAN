@@ -16,7 +16,7 @@
         <a *ngFor="let position of positions"
            (click)="onSelectPosition(position)"
            class="collection-item collection-item-icon">
-          <span>{{position.name}} <strong>{{position.cost | currency:'UAH': 'symbol-narrow'}}.</strong></span>
+          <span>{{position.name}} <strong>{{position.cost | currency:'UAH': 'symbol-narrow'}}</strong></span>
           <span>
             <i (click)="onDeletePosition($event, position)" class="material-icons">delete</i>
           </span>
